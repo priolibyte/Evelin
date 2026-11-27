@@ -481,11 +481,11 @@
             <!-- PIX Copia e Cola -->
             <div class="space-y-2">
                 <label class="block text-xs text-zinc-400 text-left font-semibold">Código PIX Copia e Cola:</label>
-                <div class="flex items-center gap-2">
-                    <input type="text" id="pix-code-input" readonly value="" class="w-full bg-[#0F0910] border border-pink-900/60 rounded-xl px-3 py-2 text-xs font-mono text-zinc-400 truncate focus:outline-none">
-                    <button onclick="copyPixCode()" id="btn-copy" class="px-4 py-2 pink-gradient text-white font-bold text-xs rounded-xl flex items-center gap-1 shrink-0 transition hover:opacity-90">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                    <input type="text" id="pix-code-input" readonly value="" class="w-full bg-[#0F0910] border border-pink-900/60 rounded-xl px-3 py-2.5 text-xs font-mono text-zinc-300 truncate focus:outline-none">
+                    <button onclick="copyPixCode()" id="btn-copy" class="px-4 py-2.5 pink-gradient text-white font-bold text-xs uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5 shrink-0 transition hover:opacity-90 shadow-md glow-pink">
                         <i data-lucide="copy" class="w-4 h-4"></i>
-                        <span id="copy-btn-text">Copiar</span>
+                        <span id="copy-btn-text">Copiar Código PIX</span>
                     </button>
                 </div>
             </div>
@@ -594,14 +594,14 @@
         // =========================================================================
         
         // Número do WhatsApp que receberá os comprovantes (com DDD e Código do País 55)
-        const WHATSAPP_SUPORTE = "5511999999999"; 
+        const WHATSAPP_SUPORTE = "5537988302700"; 
 
         // Chaves PIX Copia e Cola Estáticas Fixas para cada pacote de valor
         const CHAVES_PIX_FIXAS = {
-            10: "00020126580014BR.GOV.BCB.PIX0136poderosa-10cotas-chave-estatica-fixa52040000530398654055.005802BR5925PODEROSA PREMIADA RIFA6009SAO PAULO62070503***6304E2CA",
-            20: "00020126580014BR.GOV.BCB.PIX0136poderosa-20cotas-chave-estatica-fixa520400005303986540510.005802BR5925PODEROSA PREMIADA RIFA6009SAO PAULO62070503***6304E2CB",
-            50: "00020126580014BR.GOV.BCB.PIX0136poderosa-50cotas-chave-estatica-fixa520400005303986540525.005802BR5925PODEROSA PREMIADA RIFA6009SAO PAULO62070503***6304E2CC",
-            100: "00020126580014BR.GOV.BCB.PIX0136poderosa-100cotas-chave-estatica-fixa520400005303986540550.005802BR5925PODEROSA PREMIADA RIFA6009SAO PAULO62070503***6304E2CD"
+            10: "00020126420014BR.GOV.BCB.PIX0113+5537883027000203***52040000530398654045.005802BR5901N6001C62050501n63047FE0",
+            20: "00020126420014BR.GOV.BCB.PIX0113+5537883027000203***520400005303986540525.005802BR5901N6001C62050501n63048B3C",
+            50: "00020126420014BR.GOV.BCB.PIX0113+5537883027000203***520400005303986540550.005802BR5901N6001C62050501n6304F54A",
+            100: "00020126420014BR.GOV.BCB.PIX0113+5537883027000203***5204000053039865406100.005802BR5901N6001C62050501n6304FF8B"
         };
 
         // =========================================================================
@@ -765,13 +765,17 @@
             // Atualiza resumo do PIX
             document.getElementById('pix-total-val').textContent = formattedTotal;
 
-            // Busca a chave PIX estática correspondente às cotas selecionadas
+            // Obtém a chave PIX fixa correspondente à quantidade selecionada e preenche o input
             const pixCode = CHAVES_PIX_FIXAS[selectedQty] || CHAVES_PIX_FIXAS[50];
             document.getElementById('pix-code-input').value = pixCode;
 
-            // Gera QR Code Dinâmico via API QRServer
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
-            document.getElementById('pix-qrcode').src = qrUrl;
+            // Gera QR Code Dinâmico via API QRServer com fallback seguro
+            const qrImg = document.getElementById('pix-qrcode');
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data=${encodeURIComponent(pixCode)}`;
+            qrImg.onerror = function() {
+                this.src = `https://quickchart.io/qr?size=220&text=${encodeURIComponent(pixCode)}`;
+            };
+            qrImg.src = qrUrl;
 
             // Transição de Modais
             closeModal('modal-checkout');
@@ -870,16 +874,23 @@
         // Copiar Código PIX Copia e Cola
         function copyPixCode() {
             const pixInput = document.getElementById('pix-code-input');
+            const btnCopy = document.getElementById('btn-copy');
+            const btnText = document.getElementById('copy-btn-text');
+
             pixInput.select();
             pixInput.setSelectionRange(0, 99999);
 
             try {
                 document.execCommand('copy');
-                const btnText = document.getElementById('copy-btn-text');
-                btnText.textContent = "Copiado!";
+                btnText.textContent = "Código PIX Copiado!";
+                btnCopy.classList.remove('pink-gradient');
+                btnCopy.classList.add('bg-emerald-600');
+                
                 setTimeout(() => {
-                    btnText.textContent = "Copiar";
-                }, 2000);
+                    btnText.textContent = "Copiar Código PIX";
+                    btnCopy.classList.remove('bg-emerald-600');
+                    btnCopy.classList.add('pink-gradient');
+                }, 2500);
             } catch (err) {
                 console.error("Erro ao copiar: ", err);
             }
